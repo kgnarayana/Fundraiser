@@ -196,7 +196,7 @@
             </div>
             <div class="stat-box">
                 <div class="stat-label">Goal</div>
-                <div class="stat-value target" id="target-display">$10,000</div>
+                <div class="stat-value target" id="target-display">$75,000</div>
             </div>
         </div>
     </div>
@@ -215,10 +215,12 @@
     </div>
 
     <script>
+        // Clear local storage cache automatically
+        localStorage.clear();
+
         const targetAmount = 75000;
         let raisedAmount = 0;
-
-        let donors = [        ];
+        let donors = [];
 
         function formatCurrency(num) {
             return '$' + num.toLocaleString();
@@ -236,6 +238,9 @@
         function renderDonorList() {
             const listElement = document.getElementById('donor-list');
             listElement.innerHTML = '';
+            
+            if (donors.length === 0) return;
+
             const displayDonors = [...donors, ...donors];
 
             displayDonors.forEach(donor => {
@@ -258,7 +263,7 @@
         }
 
         function init() {
-            raisedAmount = donors.reduce((sum, donor) => sum + donor.amount, 0);
+            raisedAmount = 0;
             updateThermometer();
             renderDonorList();
         }
@@ -275,13 +280,6 @@
                 amountInput.value = '';
             }
         }
-
-        setInterval(() => {
-            const sampleNames = ["Grace Hopper", "Hank Voight", "Ivy Chen", "Jack Reacher", "Karen Page"];
-            const randomName = sampleNames[Math.floor(Math.random() * sampleNames.length)];
-            const randomAmount = Math.floor(Math.random() * 200) + 25;
-            registerNewDonation(randomName, randomAmount);
-        }, 8000);
 
         init();
     </script>
